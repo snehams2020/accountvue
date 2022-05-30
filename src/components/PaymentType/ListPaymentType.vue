@@ -1,8 +1,8 @@
 <template>
   <div align="center">
-    <h2>Manage Expense Categories</h2>
+    <h2>Manage Payment Type</h2>
     <b-breadcrumb :items="items"></b-breadcrumb>
-    <b-link :to="'/add-expense-category'">Add Expense Category</b-link>
+    <b-link :to="'/add-payment-type'">Add Payment Type</b-link>
     <button @click="LoadData" v-show="false">Load</button>
 
     <p v-if="success">
@@ -21,7 +21,7 @@
         {{result.names}}
       </b-card-text>
       <b-link
-        :to="{ name: 'EditExpenseCategory', params:{id:result.id,name:result.names}}"
+        :to="{ name: 'EditPaymentType', params:{id:result.id,name:result.names}}"
         variant="primary">Edit</b-link>
 
       <!-- <b-button href="#" variant="primary">Edit</b-button> -->
@@ -49,7 +49,7 @@ export default {
           },
 
           {
-            text: 'Manage Expense Categories',
+            text: 'Manage Payment Type',
             active: true
           }
         ]
@@ -61,7 +61,7 @@ this.LoadData()
 
    methods:{
       LoadData(){
-      fetch('http://127.0.0.1:8000/api/get-expense-category',{
+      fetch('http://127.0.0.1:8000/api/get-payment-type',{
     method: 'GET',
     headers: {
         'Authorization': 'Bearer '+this.token,
@@ -79,13 +79,13 @@ this.LoadData()
   // console.log(datas);
 
  const results=[];
- for(const data in datas['expenseCategory']){
+ for(const data in datas['paymentType']){
    //console.log(data);
 
 results.push({
 
-  names: datas['expenseCategory'][data].name,
-   id: datas['expenseCategory'][data].id,
+  names: datas['paymentType'][data].name,
+   id: datas['paymentType'][data].id,
 
 
 
@@ -96,7 +96,7 @@ results.push({
       },
       deleteData(id){
 
-   fetch('http://127.0.0.1:8000/api/delete-expense-category?id='+id,{
+   fetch('http://127.0.0.1:8000/api/delete-payment-type?id='+id,{
     method: 'DELETE',
     headers: {
         'Authorization': 'Bearer '+this.token,

@@ -1,7 +1,6 @@
 <template>
   <div>
-    <b-button v-b-toggle.sidebar-no-header>Menu</b-button>
-    <b-sidebar id="sidebar-no-header" aria-labelledby="sidebar-no-header-title" no-header shadow>
+    <b-sidebar id="sidebar-no-header"  visible="true" aria-labelledby="sidebar-no-header-title" no-header shadow>
       <template #default="{ hide }">
         <div class="p-3">
           <h4 id="sidebar-no-header-title">Account Management System</h4>
