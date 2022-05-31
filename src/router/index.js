@@ -12,6 +12,15 @@ import ListIncomeCategory from '@/components/IncomeCategory/ListIncomeCategory'
 import AddIncomeCategory from '@/components/IncomeCategory/AddIncomeCategory'
 import EditIncomeCategory from '@/components/IncomeCategory/EditIncomeCategory'
 import ListExpense from '@/components/Expense/ListExpense'
+import AddExpense from '@/components/Expense/AddExpense'
+import EditExpense from '@/components/Expense/EditExpense'
+import ListIncome from '@/components/Income/ListIncome'
+import AddIncome from '@/components/Income/AddIncome'
+import EditIncome from '@/components/Income/EditIncome'
+import Login from '@/components/Login'
+import IncomeReport from '@/components/Reports/IncomeReport'
+import ExpenseReport from '@/components/Reports/ExpenseReport'
+import BalanceSheet from '@/components/Reports/BalanceSheet'
 
 Vue.use(Router)
 
@@ -20,6 +29,11 @@ export default new Router({
             path: '/',
             name: 'Home',
             component: Home
+        },
+        {
+            path: '/login',
+            name: 'Login',
+            component: Login
         },
         {
             path: '/expense-categories',
@@ -73,6 +87,51 @@ export default new Router({
             path: '/expense',
             name: 'ListExpense',
             component: ListExpense
+        },
+        {
+            path: '/add-expense',
+            name: 'AddExpense',
+            component: AddExpense
+        },
+        {
+            path: '/edit-expense/:id',
+            name: 'EditExpense',
+            component: EditExpense,
+
+        },
+        {
+            path: '/income',
+            name: 'ListIncome',
+            component: ListIncome
+        },
+        {
+            path: '/add-income',
+            name: 'AddIncome',
+            component: AddIncome
+        },
+        {
+            path: '/edit-income/:id',
+            name: 'EditIncome',
+            component: EditIncome,
+
+        },
+        {
+            path: '/income-report',
+            name: 'IncomeReport',
+            component: IncomeReport,
+
+        },
+        {
+            path: '/expense-report',
+            name: 'ExpenseReport',
+            component: ExpenseReport,
+
+        },
+        {
+            path: '/balance-sheet',
+            name: 'BalanceSheet',
+            component: BalanceSheet,
+
         },
 
     ]

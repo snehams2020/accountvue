@@ -2,7 +2,7 @@
   <div align="center">
     <h2>Manage Expense</h2>
     <b-breadcrumb :items="items"></b-breadcrumb>
-    <b-link :to="'/add-income-category'">Add Expense</b-link>
+    <b-link :to="'/add-expense'">Add Expense</b-link>
     <button @click="LoadData" v-show="false">Load</button>
 
     <p v-if="success">
@@ -11,27 +11,71 @@
     <p v-if="error">
       <b-alert variant="danger" show>Not Saved</b-alert>
     </p>
+     <b-container fluid>
 
+
+    <!-- Main table element -->
+    <b-table striped hover
+      :items="results"
+      
+      stacked="md"
+      show-empty
+      small
+    >
+      <template #cell(name)="row">
+        {{ row.value.first }} {{ row.value.last }}
+      </template>
+
+      <template #cell(actions)="row">
+         <b-link
+        :to="{ name: 'EditExpense', params:{id:row.item.id}}"
+        variant="primary">Edit</b-link>
+ <b-link v-on:click="deleteData(row.item.id)" variant="danger">Delete</b-link>
+      
+      </template>
+
+     
+    </b-table>
+
+  
+  </b-container>
+
+<!-- 
     <b-card
       v-for="result in results"
       :key="result.names"
       style="max-width: 20rem"
       class="mb-2" title="">
       <b-card-text>
-        {{result.names}}
+               Description: {{result.description}}
+
       </b-card-text>
        <b-card-text>
-        {{result.description}}
+                        Amount: {{result.amount}}
+
       </b-card-text>
+
+      <b-card-text>
+                        Expense Date: {{result.expenseDate}}
+
+      </b-card-text>
+      <b-card-text>
+                        Expense Category: {{result.expenseCategory}}
+
+      </b-card-text>
+      <b-card-text>
+                        Payment Type: {{result.paymentType}}
+
+      </b-card-text>
+
       <b-link
-        :to="{ name: 'EditIncomeCategory', params:{id:result.id,name:result.names}}"
+        :to="{ name: 'EditExpense', params:{id:result.id}}"
         variant="primary">Edit</b-link>
 
-      <!-- <b-button href="#" variant="primary">Edit</b-button> -->
 
       <b-link v-on:click="deleteData(result.id)" variant="danger"
         >Delete</b-link>
-    </b-card>
+    </b-card> -->
   </div>
 </template>
 
@@ -87,7 +131,7 @@ this.LoadData()
 
 results.push({
 
-  names: datas['expense'][data].name,
+  // names: datas['expense'][data].name,
    id: datas['expense'][data].id,
    description: datas['expense'][data].description,
 
@@ -95,16 +139,17 @@ results.push({
    expenseDate: datas['expense'][data].expense_date,
    expenseCategory: datas['expense'][data].expenseCategory,
    paymentType: datas['expense'][data].paymentType,
-
+actions:""
 
 });
  }
+//  console.log(results);
  this.results=results;
   });
       },
       deleteData(id){
 
-   fetch('http://127.0.0.1:8000/api/delete-income-category?id='+id,{
+   fetch('http://127.0.0.1:8000/api/delete-expense?id='+id,{
     method: 'DELETE',
     headers: {
         'Authorization': 'Bearer '+this.token,

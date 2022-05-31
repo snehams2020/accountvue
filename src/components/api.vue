@@ -1,3 +1,12 @@
+<template>
+<div :expenseCategory="results"></div>
+</template>
+
+
+
+
+
+
 <script>
 export default {
     data() {

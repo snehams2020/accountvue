@@ -1,8 +1,8 @@
 <template>
   <div align="center">
-    <h2>Manage Expense Categories</h2>
+    <h2>Manage Income</h2>
     <b-breadcrumb :items="items"></b-breadcrumb>
-    <b-link :to="'/add-expense-category'">Add Expense Category</b-link>
+    <b-link :to="'/add-income'">Add Income</b-link>
     <button @click="LoadData" v-show="false">Load</button>
 
     <p v-if="success">
@@ -28,7 +28,7 @@
 
       <template #cell(actions)="row">
          <b-link
-        :to="{ name: 'EditExpenseCategory', params:{id:row.item.id}}"
+        :to="{ name: 'EditIncome', params:{id:row.item.id}}"
         variant="primary">Edit</b-link>
  <b-link v-on:click="deleteData(row.item.id)" variant="danger">Delete</b-link>
       
@@ -43,12 +43,31 @@
       v-for="result in results"
       :key="result.names"
       style="max-width: 20rem"
-      class="mb-2">
+      class="mb-2" title="">
       <b-card-text>
-        {{result.names}}
+               Description: {{result.description}}
+
       </b-card-text>
+       <b-card-text>
+                        Amount: {{result.amount}}
+
+      </b-card-text>
+
+      <b-card-text>
+                        Income Date: {{result.incomeDate}}
+
+      </b-card-text>
+      <b-card-text>
+                        Income Category: {{result.incomeCategory}}
+
+      </b-card-text>
+      <b-card-text>
+                        Payment Type: {{result.paymentType}}
+
+      </b-card-text>
+
       <b-link
-        :to="{ name: 'EditExpenseCategory', params:{id:result.id,name:result.names}}"
+        :to="{ name: 'EditIncome', params:{id:result.id}}"
         variant="primary">Edit</b-link>
 
 
@@ -75,7 +94,7 @@ export default {
           },
 
           {
-            text: 'Manage Expense Categories',
+            text: 'Manage Income',
             active: true
           }
         ]
@@ -87,7 +106,7 @@ this.LoadData()
 
    methods:{
       LoadData(){
-      fetch('http://127.0.0.1:8000/api/get-expense-category',{
+      fetch('http://127.0.0.1:8000/api/get-income',{
     method: 'GET',
     headers: {
         'Authorization': 'Bearer '+this.token,
@@ -105,25 +124,30 @@ this.LoadData()
   // console.log(datas);
 
  const results=[];
- for(const data in datas['expenseCategory']){
+ for(const data in datas['income']){
    //console.log(data);
 
 results.push({
-   id: datas['expenseCategory'][data].id,
 
-  names: datas['expenseCategory'][data].name,
+  // names: datas['expense'][data].name,
+   id: datas['income'][data].id,
+   description: datas['income'][data].description,
 
+   amount: datas['income'][data].amount,
+   incomeDate: datas['income'][data].income_date,
+   incomeCategory: datas['income'][data].incomeCategory,
+   paymentType: datas['income'][data].paymentType,
 actions:""
-
 
 });
  }
+//  console.log(results);
  this.results=results;
   });
       },
       deleteData(id){
 
-   fetch('http://127.0.0.1:8000/api/delete-expense-category?id='+id,{
+   fetch('http://127.0.0.1:8000/api/delete-income?id='+id,{
     method: 'DELETE',
     headers: {
         'Authorization': 'Bearer '+this.token,

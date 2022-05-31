@@ -11,8 +11,49 @@
     <p v-if="error">
       <b-alert variant="danger" show>Not Saved</b-alert>
     </p>
+  <b-container fluid>
 
-    <b-card
+
+    <!-- Main table element -->
+    <b-table
+      :items="results"
+      
+      stacked="md"
+      show-empty
+      small
+    >
+      <template #cell(name)="row">
+        {{ row.value.first }} {{ row.value.last }}
+      </template>
+
+      <template #cell(actions)="row">
+         <b-link
+        :to="{ name: 'EditPaymentType', params:{id:row.item.id}}"
+        variant="primary">Edit</b-link>
+ <b-link v-on:click="deleteData(row.item.id)" variant="danger">Delete</b-link>
+        <!-- <b-button size="sm" @click="info(row.item, row.index, $event.target)" class="mr-1">
+          Info modal
+        </b-button> -->
+        <!-- <b-button size="sm" @click="row.toggleDetails">
+          {{ row.detailsShowing ? 'Hide' : 'Show' }} Details
+        </b-button> -->
+      </template>
+
+      <!-- <template #row-details="row">
+        <b-card>
+          <ul>
+            <li v-for="(value, key) in row.item" :key="key">{{ key }}: {{ value }}</li>
+          </ul>
+        </b-card>
+      </template> -->
+    </b-table>
+
+    <!-- Info modal -->
+    <!-- <b-modal :id="infoModal.id" :title="infoModal.title" ok-only @hide="resetInfoModal">
+      <pre>{{ infoModal.content }}</pre>
+    </b-modal> -->
+  </b-container>
+    <!-- <b-card
       v-for="result in results"
       :key="result.names"
       style="max-width: 20rem"
@@ -24,11 +65,10 @@
         :to="{ name: 'EditPaymentType', params:{id:result.id,name:result.names}}"
         variant="primary">Edit</b-link>
 
-      <!-- <b-button href="#" variant="primary">Edit</b-button> -->
 
       <b-link v-on:click="deleteData(result.id)" variant="danger"
         >Delete</b-link>
-    </b-card>
+    </b-card> -->
   </div>
 </template>
 
@@ -83,10 +123,10 @@ this.LoadData()
    //console.log(data);
 
 results.push({
-
-  names: datas['paymentType'][data].name,
    id: datas['paymentType'][data].id,
 
+  names: datas['paymentType'][data].name,
+actions:""
 
 
 });

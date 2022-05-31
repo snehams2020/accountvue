@@ -1,7 +1,7 @@
 <template>
   <div>
 
-          <h2>Add Expense Categories</h2>
+          <h2>Add Income </h2>
                   <p v-if="success">    
                   
                   <b-alert variant="success"  show>Success Alert</b-alert>
@@ -15,25 +15,32 @@
      
        
 
-      <b-form-group id="input-group-2" label=" Name:" label-for="input-2">
-        <b-form-input
-          id="input-2"
-          v-model="form.name"
-          placeholder="Enter name"
-          required
-        ></b-form-input>
-      </b-form-group>
-   
-      <!-- <b-form-group id="input-group-3" label="Food:" label-for="input-3">
-        <b-form-select
-          id="input-3"
-          v-model="form.food"
-          :options="foods"
-          required
-        ></b-form-select>
+      <b-form-group id="input-group-2" label=" Description:" label-for="input-2">
+         <b-form-textarea
+      id="textarea"
+      v-model="form.description"
+      placeholder="Enter something..."
+      rows="3"
+      max-rows="6"
+    ></b-form-textarea>
       </b-form-group>
 
-      <b-form-group id="input-group-4" v-slot="{ ariaDescribedby }">
+      <b-form-group id="input-group-2" label=" Amount:" label-for="input-2">
+
+          <b-form-input v-model="form.amount" placeholder="Enter Amount"></b-form-input>
+      </b-form-group>
+<b-form-group id="input-group-3" label="income Date:" label-for="input-3">
+
+          <b-form-datepicker id="example-datepicker" v-model="form.income_date" class="mb-2"></b-form-datepicker>
+    </b-form-group>   
+      <b-form-group id="input-group-3" label="Payment Type:" label-for="input-3">
+            <b-form-select v-model="form.payment_type_id" :options="options"></b-form-select>
+      </b-form-group>
+       <b-form-group id="input-group-3" label="income Category:" label-for="input-3">
+            <b-form-select v-model="form.incomecategory_id" :options="resultsexp"></b-form-select>
+      </b-form-group>
+
+     <!--  <b-form-group id="input-group-4" v-slot="{ ariaDescribedby }">
         <b-form-checkbox-group
           v-model="form.checked"
           id="checkboxes-4"
@@ -55,6 +62,7 @@
 
 <script>
   export default {
+
     data() {
       return {
          "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiNDYxZjQzNTQ0OTI0MTAwZGMyMTBlMGFlNTNkNWJmYjdmODJjZTEwNWJiM2U5YzYxOWIzMmZhYTcwYzE0ZGM1YTRmMTBiOGNmMmMyZTQyZjIiLCJpYXQiOjE2NTM3MTE4NzYuODk3NTUxLCJuYmYiOjE2NTM3MTE4NzYuODk3NTY1LCJleHAiOjE2ODUyNDc4NzYuMzI3NDIyLCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.GDU-z4UN4GH5SXQch2HGBL5tgm9jMBqrfbVysQYL7vRfsCwJykoBpMOz9CwvECCbWYXLrLQmW8ksuRcRjzRpKlpRJMbpE4DyHnEFB58IHDMGy0NqZvy3MHj3XyCN6ldbfUkIBg48j_tedbqc3HrKUHZwKdWHxXsjxzur0bQixt_xqakWA2ooYvq5nc_4aHW2oSIGXCBK_8hXbZ52mMVABHijFqKFhfdU6MazVMC5wW2zhetNIuJqKoVRhQw6p7w9i0_VDKFfUTv2oF3v-8uBO0tY0yhZRDRrkA7384CTWh0G_AlMFNnJ9M4E6A8VzM2a6GGen0DhVl9QR6Ly9XYH1iEvpRznJp9J8LEwgsnK3kdE9fRQUVHeN_Wqd4WmQZdZQlGBowfrCDAINV-Q0n3NsAD26eiKAj_d47oemstL692MgCE0q-ppH5r9P1I8eLnUODZj0qkiOqHxCfPQY8_VQB0nWRxkAM4oubMwrlV3HgrjeUCyloslW0i2oEuYBC9EafSLFxrRoiaI0nNo1GmyMmhh-VQI492qdfM7U5-NtwkQ0kphWGIDgogstLRNScMm6LzBZAgmlkKe0RPb9hLZeMuiDMkEi9TIJ8sg4F-18oaTExUVnP5uSZ37mRF9GS_bKWxz9GYEL8YK50CUrMwN8Gqxtitf6YC4CjGEebmSPS8"
@@ -62,21 +70,93 @@
         ,
          success:false,
       error:false,
+      selected: null,
+        options: [
+        ],
+        resultsexp:[],
         form: {
-         // email: '',
-           name: '',
-          // food: null,
-          // checked: []
+          description: '',
+           amount: '',
+          income_date: '',
+           payment_type_id:'',
+           incomecategory_id:''
         },
-      //  foods: [{ text: 'Select One', value: null }, 'Carrots', 'Beans', 'Tomatoes', 'Corn'],
         show: true
       }
+    },
+    mounted(){
+
+ fetch('http://127.0.0.1:8000/api/get-payment-type',{
+    method: 'GET',
+    headers: {
+        'Authorization': 'Bearer '+this.token,
+
+    },
+} ).then((response)=>{
+        console.log(response);
+        if(response.ok){
+         return response.json();
+        }
+
+
+
+      }).then((datas)=>{
+  // console.log(datas);
+
+ const options=[];
+ for(const data in datas['paymentType']){
+   //console.log(data);
+
+options.push({
+
+  text: datas['paymentType'][data].name,
+   value: datas['paymentType'][data].id,
+
+
+
+});
+ }
+ this.options=options;
+  });
+  fetch('http://127.0.0.1:8000/api/get-income-category',{
+    method: 'GET',
+    headers: {
+        'Authorization': 'Bearer '+this.token,
+
+    },
+} ).then((response)=>{
+        console.log(response);
+        if(response.ok){
+         return response.json();
+        }
+
+
+
+      }).then((datas)=>{
+  // console.log(datas);
+
+ const resultsexp=[];
+ for(const data in datas['incomeCategory']){
+   //console.log(data);
+
+resultsexp.push({
+
+  text: datas['incomeCategory'][data].name,
+   value: datas['incomeCategory'][data].id,
+
+
+
+});
+ }
+ this.resultsexp=resultsexp;
+  });
+        
     },
     methods: {
       onSubmit(event) {
         event.preventDefault()
 
-  fetch('http://127.0.0.1:8000/api/add-expense-category',{
+  fetch('http://127.0.0.1:8000/api/add-income',{
 method:'POST',
 headers:{ 
     'Content-Type':'application/json',
@@ -84,7 +164,12 @@ headers:{
 
 },
 body:JSON.stringify({
-    name:this.form.name
+    description:this.form.description,
+    amount:this.form.amount,
+    income_date:this.form.income_date,
+   incomecategory_id:this.form.incomecategory_id,
+    payment_type_id:this.form.payment_type_id,
+
 }),
 
     }).then((response)=>{
@@ -122,11 +207,12 @@ body:JSON.stringify({
       onReset(event) {
         event.preventDefault()
         // Reset our form values
-       // this.form.email = ''
-        this.form.name = ''
-       // this.form.food = null
-       // this.form.checked = []
-        // Trick to reset/clear native browser form validation state
+        this.form.amount = ''
+        this.form.description = ''
+       this.form.income_date = ''
+        this.form.incomecategory_id = ''
+       this.form.payment_type_id = ''
+      
         this.show = false
         this.$nextTick(() => {
           this.show = true

@@ -11,8 +11,35 @@
     <p v-if="error">
       <b-alert variant="danger" show>Not Saved</b-alert>
     </p>
+  <b-container fluid>
 
-    <b-card
+
+    <!-- Main table element -->
+    <b-table striped hover
+      :items="results"
+      
+      stacked="md"
+      show-empty
+      small
+    >
+      <template #cell(name)="row">
+        {{ row.value.first }} {{ row.value.last }}
+      </template>
+
+      <template #cell(actions)="row">
+         <b-link
+        :to="{ name: 'EditIncomeCategory', params:{id:row.item.id}}"
+        variant="primary">Edit</b-link>
+ <b-link v-on:click="deleteData(row.item.id)" variant="danger">Delete</b-link>
+      
+      </template>
+
+     
+    </b-table>
+
+  
+  </b-container>
+    <!-- <b-card
       v-for="result in results"
       :key="result.names"
       style="max-width: 20rem"
@@ -24,11 +51,10 @@
         :to="{ name: 'EditIncomeCategory', params:{id:result.id,name:result.names}}"
         variant="primary">Edit</b-link>
 
-      <!-- <b-button href="#" variant="primary">Edit</b-button> -->
 
       <b-link v-on:click="deleteData(result.id)" variant="danger"
         >Delete</b-link>
-    </b-card>
+    </b-card> -->
   </div>
 </template>
 
@@ -83,11 +109,11 @@ this.LoadData()
    //console.log(data);
 
 results.push({
-
-  names: datas['incomeCategory'][data].name,
    id: datas['incomeCategory'][data].id,
 
+  names: datas['incomeCategory'][data].name,
 
+actions:""
 
 });
  }
