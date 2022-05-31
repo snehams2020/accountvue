@@ -1,67 +1,148 @@
 <template>
-  <div>
-    <!-- Header -->
-    <div class="header bg-gradient-success py-7 py-lg-8 pt-lg-9">
-      <b-container>
-        <div class="header-body text-center mb-7">
-          <b-row class="justify-content-center">
-            <b-col xl="5" lg="6" md="8" class="px-5">
-              <h1 class="text-white">Welcome!</h1>
-              <p class="text-lead text-white">Use these awesome forms to login or create new account in your project for
-                free.</p>
-            </b-col>
-          </b-row>
-        </div>
-      </b-container>
-      <div class="separator separator-bottom separator-skew zindex-100">
-        <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1"
-             xmlns="http://www.w3.org/2000/svg">
-          <polygon class="fill-default" points="2560 0 2560 100 0 100"></polygon>
-        </svg>
-      </div>
+    <div class="vue-tempalte">
+        <form @submit.prevent="onSubmit()">
+            <h3>Sign In</h3>
+            <div class="form-group">
+                <label>Email address</label>
+                <input type="email" class="form-control form-control-lg" v-model="form.email"/>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" class="form-control form-control-lg" v-model="form.password" />
+            </div>
+            <button type="submit" class="btn btn-dark btn-lg btn-block">Sign In</button>
+            <!-- <p class="forgot-password text-right mt-2 mb-4">
+                <router-link to="/forgot-password">Forgot password ?</router-link>
+            </p>
+            <div class="social-icons">
+                <ul>
+                    <li><a href="#"><i class="fa fa-google"></i></a></li>
+                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                </ul>
+            </div> -->
+        </form>
     </div>
-    <!-- Page content -->
-    <b-container class="mt--8 pb-5">
-      <b-row class="justify-content-center">
-        <b-col lg="5" md="7">
-          <b-card no-body class="bg-secondary border-0 mb-0">
-          
-            <b-card-body class="px-lg-5 py-lg-5">
-              <div class="text-center text-muted mb-4">
-                <small>Or sign in with credentials</small>
-              </div>
-              <!-- <validation-observer v-slot="{handleSubmit}" ref="formValidator"> -->
-                <b-form role="form" @submit.prevent="handleSubmit(onSubmit)">
-                 
-                  <b-form-checkbox v-model="model.rememberMe">Remember me</b-form-checkbox>
-                  <div class="text-center">
-                    <base-button type="primary" native-type="submit" class="my-4">Sign in</base-button>
-                  </div>
-                </b-form>
-              <!-- </validation-observer> -->
-            </b-card-body>
-          </b-card>
-         
-        </b-col>
-      </b-row>
-    </b-container>
-  </div>
 </template>
+
+
 <script>
   export default {
     data() {
       return {
-        model: {
-          email: '',
+         form: {
+           email: '',
           password: '',
-          rememberMe: false
-        }
+        },
+       
       };
     },
     methods: {
       onSubmit() {
         // this will be called only after form is valid. You can do api call here to login
-      }
+
+ fetch('http://127.0.0.1:8000/api/login',{
+method:'POST',
+headers:{ 
+    'Content-Type':'application/json',
+    // 'Authorization': 'Bearer '+this.token,
+
+},
+body:JSON.stringify({
+    email:this.form.email,
+    password:this.form.password,
+    
+}),
+
+    }).then((response)=>{
+       // console.log(response);
+        if(response.ok){
+         return response.json();
+        }
+
+
+
+      }).then((datas)=>{
+
+        //if(datas.status=="true"){
+        localStorage["token"]=datas.data.token;
+        localStorage["user"]=datas.data.user;
+
+               // localStorage.setItem('token',datas.data.token);          
+              //  localStorage.setItem('user',datas.data.user);          
+       //console.log(localStorage['user']);
+        this.$router.push('/home');
+
+       // }
+      
+                 
+
+       
+      
+        }
+
+
+      ).catch((error) => {
+                        console.log(error);
+      });
+      
+      
+
+
+
+}
     }
   };
 </script>
+<style scoped>
+* {
+  box-sizing: border-box;
+}
+body {
+  background: #2554FF !important;
+  min-height: 100vh;
+  display: flex;
+  font-weight: 400;
+}
+body,
+html,
+.App,
+.vue-tempalte,
+.vertical-center {
+  width: 100%;
+  height: 100%;
+}
+.navbar-light {
+  background-color: #ffffff;
+  box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
+}
+.vertical-center {
+  display: flex;
+  text-align: left;
+  justify-content: center;
+  flex-direction: column;    
+}
+.inner-block {
+  width: 450px;
+  margin: auto;
+  background: #ffffff;
+  box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
+  padding: 40px 55px 45px 55px;
+  border-radius: 15px;
+  transition: all .3s;
+}
+.vertical-center .form-control:focus {
+  border-color: #2554FF;
+  box-shadow: none;
+}
+.vertical-center h3 {
+  text-align: center;
+  margin: 0;
+  line-height: 1;
+  padding-bottom: 20px;
+}
+label {
+  font-weight: 500;
+}
+
+</style>

@@ -7,7 +7,6 @@ import EditExpenseCategory from '@/components/ExpenseCategory/EditExpenseCategor
 import ListPaymentType from '@/components/PaymentType/ListPaymentType'
 import AddPaymentType from '@/components/PaymentType/AddPaymentType'
 import EditPaymentType from '@/components/PaymentType/EditPaymentType'
-
 import ListIncomeCategory from '@/components/IncomeCategory/ListIncomeCategory'
 import AddIncomeCategory from '@/components/IncomeCategory/AddIncomeCategory'
 import EditIncomeCategory from '@/components/IncomeCategory/EditIncomeCategory'
@@ -135,4 +134,4 @@ export default new Router({
         },
 
     ]
-})
+});

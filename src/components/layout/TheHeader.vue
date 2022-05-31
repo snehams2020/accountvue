@@ -4,10 +4,11 @@
   <b-navbar type="dark" variant="dark">
         <b-navbar-brand href="#"><router-link to="/home" >Account Management</router-link></b-navbar-brand>
 
-    <b-navbar-nav>
+    <b-navbar-nav v-if="loggedIn != ''">
       <!-- <b-nav-item href="#"><router-link to="/home" >Home</router-link></b-nav-item> -->
             <b-nav-item href="#"><router-link to="/payment-type">Payment Type</router-link>
-</b-nav-item>
+    
+    </b-nav-item>
 
       <!-- Navbar dropdowns -->
       <b-nav-item-dropdown text="Categories" right>
@@ -16,7 +17,7 @@
             </b-nav-item-dropdown>
             <b-nav-item href="#"><router-link to="/expense">Expense</router-link></b-nav-item>
             <b-nav-item href="#"><router-link to="/income">Income</router-link></b-nav-item>
- <b-nav-item-dropdown text="Reports" right>
+        <b-nav-item-dropdown text="Reports" right>
         <b-dropdown-item href="#"><router-link to="/income-report">Income Report</router-link></b-dropdown-item>
         <b-dropdown-item href="#"><router-link to="/expense-report">Expense Report</router-link></b-dropdown-item>
                    <b-dropdown-item href="#"><router-link to="/balance-sheet">Balance Sheet</router-link></b-dropdown-item>
@@ -25,7 +26,7 @@
 
       <b-nav-item-dropdown text="User" right>
         <!-- <b-dropdown-item href="#">Account</b-dropdown-item> -->
-        <b-dropdown-item href="#">Sign Out</b-dropdown-item>
+        <b-dropdown-item href="#" @click="logout">Sign Out</b-dropdown-item>
       </b-nav-item-dropdown>
     </b-navbar-nav>
   </b-navbar>
@@ -69,6 +70,31 @@
 
 <script>
 export default {
+  props:['loggedIn'],
+  data(){
+    return{
+      //loggedIn:false
+    }
+  },
+   mounted(){
+//this.loggedIn()
+   },
+  methods:{
+     logout(){
+    localStorage.removeItem('user');  
+    localStorage.removeItem('token'); 
+        this.$router.push('/login');
+    
+       },
+    //     loggedIn() {
+    //   // `this` points to the component instance
+    //   if( localStorage.getItem('token')!=""){
+
+    //     this.loggedIn=true;
+    //   }
+    //   return loggedIn;
+    // }
+  }
 
 }
 </script>

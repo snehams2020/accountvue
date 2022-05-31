@@ -18,7 +18,21 @@ new Vue({
     template: '<App/>',
     render: h => h(App)
 })
+router.beforeEach((to, from, next) => {
+    // redirect to login page if not logged in and trying to access a restricted page
+    const publicPages = ['/login'];
+    const authRequired = !publicPages.includes(to.path);
+    const loggedIn = localStorage.getItem('user');
+
+    if (authRequired && !loggedIn) {
+        return next('/login');
+    }
+
+    next();
+})
+
 export default {
+
     data() {
         return {
             results: [],
