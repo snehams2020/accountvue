@@ -1,5 +1,8 @@
 <template>
-   <b-alert show> Hello {{ name }}! </b-alert>
+<div>
+   <b-alert show> Welcome to Account Management System</b-alert>
+
+</div>
 </template>
 
 <script>
