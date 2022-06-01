@@ -23,6 +23,9 @@
               rows="3"
               max-rows="6"
             ></b-form-textarea>
+             <b-form-invalid-feedback id="input-live-feedback">
+              {{errors.description}}    
+            </b-form-invalid-feedback>
           </b-form-group>
         </b-col>
       </b-row>
@@ -33,6 +36,9 @@
               v-model="form.amount"
               placeholder="Enter Amount"
             ></b-form-input>
+             <b-form-invalid-feedback id="input-live-feedback">
+              {{errors.amount}}    
+            </b-form-invalid-feedback>
           </b-form-group>
         </b-col>
       </b-row>
@@ -48,6 +54,9 @@
               v-model="form.expense_date"
               class="mb-2"
             ></b-form-datepicker>
+             <b-form-invalid-feedback id="input-live-feedback">
+              {{errors.expense_date}}    
+            </b-form-invalid-feedback>
           </b-form-group>
         </b-col>
       </b-row>
@@ -62,6 +71,10 @@
               v-model="form.payment_type_id"
               :options="options"
             ></b-form-select>
+
+             <b-form-invalid-feedback id="input-live-feedback">
+              {{errors.payment_type_id}}    
+            </b-form-invalid-feedback>
           </b-form-group>
         </b-col>
       </b-row>
@@ -76,6 +89,9 @@
               v-model="form.expensecategory_id"
               :options="resultsexp"
             ></b-form-select>
+             <b-form-invalid-feedback id="input-live-feedback">
+              {{errors.expensecategory_id}}    
+            </b-form-invalid-feedback>
           </b-form-group>
         </b-col>
       </b-row>
@@ -108,6 +124,13 @@
         ],
         resultsexp:[],
         form: {
+          description: '',
+           amount: '',
+          expense_date: '',
+           payment_type_id:'',
+           expensecategory_id:''
+        },
+         errors: {
           description: '',
            amount: '',
           expense_date: '',
@@ -214,7 +237,7 @@ body:JSON.stringify({
 
 
       }).then((datas)=>{
-       // console.log(response);
+      //  console.log(datas.data[0].payment_type_id);
 
         if(datas.status=="true"){
                        // console.log(datas.status);
@@ -225,6 +248,16 @@ body:JSON.stringify({
                              //    console.log(datas.status);
 
           this.error=true
+         //  for(const data in datas['data']){
+          this.errors.description=(datas['data']['description'])?datas['data']['description'][0]:"";
+          this.errors.amount=(datas['data']['amount'])?datas['data']['amount'][0]:"";
+          this.errors.expense_date=(datas['data']['expense_date'])?datas['data']['expense_date'][0]:"";
+          this.errors.expensecategory_id=(datas['data']['expensecategory_id'])?datas['data']['expensecategory_id'][0]:"";
+          this.errors.payment_type_id=(datas['data']['payment_type_id'])?datas['data']['payment_type_id'][0]:"";
+
+          // }
+         // console.log(this.errors.payment_type_id);
+
         }
 
 
@@ -258,4 +291,12 @@ body:JSON.stringify({
 form {
   margin-left: 30em;
 }
+.invalid-feedback {
+ display:block !important;
+ width:100%;
+ margin-top:.25rem;
+ font-size:80%;
+ color:#dc3545
+}
+
 </style>

@@ -18,6 +18,9 @@
               placeholder="Enter name"
               required
             ></b-form-input>
+             <b-form-invalid-feedback id="input-live-feedback">
+              {{errors.name}}    
+            </b-form-invalid-feedback>
           </b-form-group>
         </b-col>
       </b-row>
@@ -44,12 +47,13 @@
          success:false,
       error:false,
         form: {
-         // email: '',
            name: '',
-          // food: null,
-          // checked: []
+          
         },
-      //  foods: [{ text: 'Select One', value: null }, 'Carrots', 'Beans', 'Tomatoes', 'Corn'],
+         errors: {
+          name: '',
+         
+        },
         show: true
       }
     },
@@ -88,6 +92,8 @@ body:JSON.stringify({
                              //    console.log(datas.status);
 
           this.error=true
+          this.errors.name=(datas['data']['name'])?datas['data']['name'][0]:"";
+
         }
 
 
@@ -120,4 +126,12 @@ body:JSON.stringify({
 form {
   margin-left: 30em;
 }
+.invalid-feedback {
+ display:block !important;
+ width:100%;
+ margin-top:.25rem;
+ font-size:80%;
+ color:#dc3545
+}
+
 </style>

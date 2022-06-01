@@ -81,7 +81,7 @@ body:JSON.stringify({
 
 
       ).catch((error) => {
-                        console.log(error);
+        console.log(error);
       });
 
 
@@ -93,6 +93,9 @@ body:JSON.stringify({
   };
 </script>
 <style scoped>
+form{
+  margin-left:0em;
+}
 * {
   box-sizing: border-box;
 }

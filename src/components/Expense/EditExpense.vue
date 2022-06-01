@@ -22,6 +22,9 @@
               rows="3"
               max-rows="6"
             ></b-form-textarea>
+             <b-form-invalid-feedback id="input-live-feedback">
+              {{errors.description}}    
+            </b-form-invalid-feedback>
           </b-form-group>
         </b-col>
       </b-row>
@@ -31,7 +34,11 @@
             <b-form-input
               v-model="form.amount"
               placeholder="Enter Amount"
+              aria-required="required"
             ></b-form-input>
+             <b-form-invalid-feedback id="input-live-feedback">
+              {{errors.amount}}    
+            </b-form-invalid-feedback>
           </b-form-group>
         </b-col>
       </b-row>
@@ -47,6 +54,9 @@
               v-model="form.expense_date"
               class="mb-2"
             ></b-form-datepicker>
+              <b-form-invalid-feedback id="input-live-feedback">
+              {{errors.expense_date}}    
+            </b-form-invalid-feedback>
           </b-form-group>
         </b-col>
       </b-row>
@@ -61,6 +71,9 @@
               v-model="form.payment_type_id"
               :options="options"
             ></b-form-select>
+             <b-form-invalid-feedback id="input-live-feedback">
+              {{errors.payment_type_id}}    
+            </b-form-invalid-feedback>
           </b-form-group>
         </b-col>
       </b-row>
@@ -76,6 +89,9 @@
               :options="resultsexp"
             ></b-form-select>
           </b-form-group>
+           <b-form-invalid-feedback id="input-live-feedback">
+              {{errors.expensecategory_id}}    
+            </b-form-invalid-feedback>
         </b-col>
       </b-row>
       <b-row class="my-1">
@@ -112,6 +128,13 @@ export default {
            payment_type_id:'',
            expensecategory_id:''
 
+        },
+          errors: {
+          description: '',
+           amount: '',
+          expense_date: '',
+           payment_type_id:'',
+           expensecategory_id:''
         },
         show: true
       }
@@ -274,7 +297,14 @@ body:JSON.stringify({
         }else{
                              //    console.log(datas.status);
 
-          this.error=true
+          this.error=true;
+           this.errors.description=(datas['data']['description'])?datas['data']['description'][0]:"";
+          this.errors.amount=(datas['data']['amount'])?datas['data']['amount'][0]:"";
+          this.errors.expense_date=(datas['data']['expense_date'])?datas['data']['expense_date'][0]:"";
+          this.errors.expensecategory_id=(datas['data']['expensecategory_id'])?datas['data']['expensecategory_id'][0]:"";
+          this.errors.payment_type_id=(datas['data']['payment_type_id'])?datas['data']['payment_type_id'][0]:"";
+
+         // console.log(this.errors.payment_type_id);
         }
 
 
@@ -311,5 +341,12 @@ body:JSON.stringify({
 <style>
 form {
   margin-left: 30em;
+}
+.invalid-feedback {
+ display:block !important;
+ width:100%;
+ margin-top:.25rem;
+ font-size:80%;
+ color:#dc3545
 }
 </style>

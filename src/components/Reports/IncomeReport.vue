@@ -208,6 +208,9 @@ results.push({
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+form{
+  margin-left:0em;
+}
 h1,
 h2 {
   font-weight: normal;

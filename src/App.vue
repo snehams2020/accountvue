@@ -49,4 +49,11 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+.invalid-feedback {
+ display:block !important;
+ width:100%;
+ margin-top:.25rem;
+ font-size:80%;
+ color:#dc3545
+}
 </style>

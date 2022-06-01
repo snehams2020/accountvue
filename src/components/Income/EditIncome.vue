@@ -22,6 +22,9 @@
               rows="3"
               max-rows="6"
             ></b-form-textarea>
+             <b-form-invalid-feedback id="input-live-feedback">
+              {{errors.description}}    
+            </b-form-invalid-feedback>
           </b-form-group>
         </b-col>
       </b-row>
@@ -32,6 +35,9 @@
               v-model="form.amount"
               placeholder="Enter Amount"
             ></b-form-input>
+             <b-form-invalid-feedback id="input-live-feedback">
+              {{errors.amount}}    
+            </b-form-invalid-feedback>
           </b-form-group>
         </b-col>
       </b-row>
@@ -47,6 +53,9 @@
               v-model="form.income_date"
               class="mb-2"
             ></b-form-datepicker>
+             <b-form-invalid-feedback id="input-live-feedback">
+              {{errors.income_date}}    
+            </b-form-invalid-feedback>
           </b-form-group>
         </b-col>
       </b-row>
@@ -61,6 +70,9 @@
               v-model="form.payment_type_id"
               :options="options"
             ></b-form-select>
+               <b-form-invalid-feedback id="input-live-feedback">
+              {{errors.payment_type_id}}    
+            </b-form-invalid-feedback>
           </b-form-group>
         </b-col>
       </b-row>
@@ -75,6 +87,9 @@
               v-model="form.incomecategory_id"
               :options="resultsexp"
             ></b-form-select>
+             <b-form-invalid-feedback id="input-live-feedback">
+              {{errors.incomecategory_id}}    
+            </b-form-invalid-feedback>
           </b-form-group>
         </b-col>
       </b-row>
@@ -112,6 +127,13 @@ export default {
            payment_type_id:'',
           incomecategory_id:''
 
+        },
+         errors: {
+          description: '',
+           amount: '',
+          income_date: '',
+           payment_type_id:'',
+           incomecategory_id:''
         },
         show: true
       }
@@ -274,7 +296,13 @@ body:JSON.stringify({
         }else{
                              //    console.log(datas.status);
 
-          this.error=true
+          this.error=true;
+             this.errors.description=(datas['data']['description'])?datas['data']['description'][0]:"";
+          this.errors.amount=(datas['data']['amount'])?datas['data']['amount'][0]:"";
+          this.errors.income_date=(datas['data']['income_date'])?datas['data']['income_date'][0]:"";
+          this.errors.incomecategory_id=(datas['data']['incomecategory_id'])?datas['data']['incomecategory_id'][0]:"";
+          this.errors.payment_type_id=(datas['data']['payment_type_id'])?datas['data']['payment_type_id'][0]:"";
+
         }
 
 
@@ -311,5 +339,12 @@ body:JSON.stringify({
 <style>
 form {
   margin-left: 30em;
+}
+.invalid-feedback {
+ display:block !important;
+ width:100%;
+ margin-top:.25rem;
+ font-size:80%;
+ color:#dc3545
 }
 </style>
