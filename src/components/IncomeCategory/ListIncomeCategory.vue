@@ -11,34 +11,25 @@
     <p v-if="error">
       <b-alert variant="danger" show>Not Saved</b-alert>
     </p>
-  <b-container fluid>
+    <b-container fluid>
+      <!-- Main table element -->
+      <b-table striped hover :items="results" stacked="md" show-empty small>
+        <template #cell(name)="row">
+          {{ row.value.first }} {{ row.value.last }}
+        </template>
 
-
-    <!-- Main table element -->
-    <b-table striped hover
-      :items="results"
-      
-      stacked="md"
-      show-empty
-      small
-    >
-      <template #cell(name)="row">
-        {{ row.value.first }} {{ row.value.last }}
-      </template>
-
-      <template #cell(actions)="row">
-         <b-link
-        :to="{ name: 'EditIncomeCategory', params:{id:row.item.id}}"
-        variant="primary">Edit</b-link>
- <b-link v-on:click="deleteData(row.item.id)" variant="danger">Delete</b-link>
-      
-      </template>
-
-     
-    </b-table>
-
-  
-  </b-container>
+        <template #cell(actions)="row">
+          <b-link
+            :to="{ name: 'EditIncomeCategory', params:{id:row.item.id}}"
+            variant="primary"
+            >Edit</b-link
+          >
+          <b-link v-on:click="deleteData(row.item.id)" variant="danger"
+            >Delete</b-link
+          >
+        </template>
+      </b-table>
+    </b-container>
     <!-- <b-card
       v-for="result in results"
       :key="result.names"
@@ -66,7 +57,7 @@ export default {
         results:[],
         success:false,
       error:false,
-  "token":(localStorage.getItem('token'))?localStorage.getItem('token'):"",   
+  "token":(localStorage.getItem('token'))?localStorage.getItem('token'):"",
 
          items: [
           {

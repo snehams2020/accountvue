@@ -11,64 +11,25 @@
     <p v-if="error">
       <b-alert variant="danger" show>Not Saved</b-alert>
     </p>
-  <b-container fluid>
+    <b-container fluid>
+      <!-- Main table element -->
+      <b-table :items="results" stacked="md" show-empty small>
+        <template #cell(name)="row">
+          {{ row.value.first }} {{ row.value.last }}
+        </template>
 
-
-    <!-- Main table element -->
-    <b-table
-      :items="results"
-      
-      stacked="md"
-      show-empty
-      small
-    >
-      <template #cell(name)="row">
-        {{ row.value.first }} {{ row.value.last }}
-      </template>
-
-      <template #cell(actions)="row">
-         <b-link
-        :to="{ name: 'EditPaymentType', params:{id:row.item.id}}"
-        variant="primary">Edit</b-link>
- <b-link v-on:click="deleteData(row.item.id)" variant="danger">Delete</b-link>
-        <!-- <b-button size="sm" @click="info(row.item, row.index, $event.target)" class="mr-1">
-          Info modal
-        </b-button> -->
-        <!-- <b-button size="sm" @click="row.toggleDetails">
-          {{ row.detailsShowing ? 'Hide' : 'Show' }} Details
-        </b-button> -->
-      </template>
-
-      <!-- <template #row-details="row">
-        <b-card>
-          <ul>
-            <li v-for="(value, key) in row.item" :key="key">{{ key }}: {{ value }}</li>
-          </ul>
-        </b-card>
-      </template> -->
-    </b-table>
-
-    <!-- Info modal -->
-    <!-- <b-modal :id="infoModal.id" :title="infoModal.title" ok-only @hide="resetInfoModal">
-      <pre>{{ infoModal.content }}</pre>
-    </b-modal> -->
-  </b-container>
-    <!-- <b-card
-      v-for="result in results"
-      :key="result.names"
-      style="max-width: 20rem"
-      class="mb-2">
-      <b-card-text>
-        {{result.names}}
-      </b-card-text>
-      <b-link
-        :to="{ name: 'EditPaymentType', params:{id:result.id,name:result.names}}"
-        variant="primary">Edit</b-link>
-
-
-      <b-link v-on:click="deleteData(result.id)" variant="danger"
-        >Delete</b-link>
-    </b-card> -->
+        <template #cell(actions)="row">
+          <b-link
+            :to="{ name: 'EditPaymentType', params:{id:row.item.id}}"
+            variant="primary"
+            >Edit</b-link
+          >
+          <b-link v-on:click="deleteData(row.item.id)" variant="danger"
+            >Delete</b-link
+          >
+        </template>
+      </b-table>
+    </b-container>
   </div>
 </template>
 
@@ -80,7 +41,7 @@ export default {
         results:[],
         success:false,
       error:false,
-        "token":(localStorage.getItem('token'))?localStorage.getItem('token'):"",   
+        "token":(localStorage.getItem('token'))?localStorage.getItem('token'):"",
 
          items: [
           {

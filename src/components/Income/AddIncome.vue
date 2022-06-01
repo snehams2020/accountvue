@@ -1,69 +1,90 @@
 <template>
   <div>
-
-          <h2>Add Income </h2>
-                  <p v-if="success">    
-                  
-                  <b-alert variant="success"  show>Success Alert</b-alert>
-                </p>
-                    <p v-if="error">    
-                  <b-alert variant="danger"  show>Not Saved</b-alert>
-
-                    </p>
+    <h2>Add Income</h2>
+    <p v-if="success">
+      <b-alert variant="success" show>Success Alert</b-alert>
+    </p>
+    <p v-if="error">
+      <b-alert variant="danger" show>Not Saved</b-alert>
+    </p>
 
     <b-form @submit="onSubmit" @reset="onReset" v-if="show">
-     
-        <b-row class="my-1">
-    <b-col sm="6">
-
-      <b-form-group id="input-group-2" label=" Description:" label-for="input-2">
-         <b-form-textarea
-      id="textarea"
-      v-model="form.description"
-      placeholder="Enter something..."
-      rows="3"
-      max-rows="6"
-    ></b-form-textarea>
-      </b-form-group>
-      </b-col>
+      <b-row class="my-1">
+        <b-col sm="6">
+          <b-form-group
+            id="input-group-2"
+            label=" Description:"
+            label-for="input-2"
+          >
+            <b-form-textarea
+              id="textarea"
+              v-model="form.description"
+              placeholder="Enter something..."
+              rows="3"
+              max-rows="6"
+            ></b-form-textarea>
+          </b-form-group>
+        </b-col>
       </b-row>
-       <b-row class="my-1">
-    <b-col sm="6">
-
-      <b-form-group id="input-group-2" label=" Amount:" label-for="input-2">
-
-          <b-form-input v-model="form.amount" placeholder="Enter Amount"></b-form-input>
-      </b-form-group>
-      </b-col>
+      <b-row class="my-1">
+        <b-col sm="6">
+          <b-form-group id="input-group-2" label=" Amount:" label-for="input-2">
+            <b-form-input
+              v-model="form.amount"
+              placeholder="Enter Amount"
+            ></b-form-input>
+          </b-form-group>
+        </b-col>
       </b-row>
-       <b-row class="my-1">
-    <b-col sm="6">
-<b-form-group id="input-group-3" label="income Date:" label-for="input-3">
-
-          <b-form-datepicker id="example-datepicker" v-model="form.income_date" class="mb-2"></b-form-datepicker>
-    </b-form-group>   
-    </b-col>
-    </b-row>
-     <b-row class="my-1">
-    <b-col sm="6">
-      <b-form-group id="input-group-3" label="Payment Type:" label-for="input-3">
-            <b-form-select v-model="form.payment_type_id" :options="options"></b-form-select>
-      </b-form-group>
-      </b-col>
+      <b-row class="my-1">
+        <b-col sm="6">
+          <b-form-group
+            id="input-group-3"
+            label="income Date:"
+            label-for="input-3"
+          >
+            <b-form-datepicker
+              id="example-datepicker"
+              v-model="form.income_date"
+              class="mb-2"
+            ></b-form-datepicker>
+          </b-form-group>
+        </b-col>
       </b-row>
-       <b-row class="my-1">
-    <b-col sm="6">
-       <b-form-group id="input-group-3" label="income Category:" label-for="input-3">
-            <b-form-select v-model="form.incomecategory_id" :options="resultsexp"></b-form-select>
-      </b-form-group>
-</b-col>
-</b-row>
-  
- <b-row class="my-1">
-    <b-col sm="6">
-      <b-button type="submit" variant="primary">Submit</b-button>
-      <b-button type="reset" variant="danger">Reset</b-button>
-      </b-col>
+      <b-row class="my-1">
+        <b-col sm="6">
+          <b-form-group
+            id="input-group-3"
+            label="Payment Type:"
+            label-for="input-3"
+          >
+            <b-form-select
+              v-model="form.payment_type_id"
+              :options="options"
+            ></b-form-select>
+          </b-form-group>
+        </b-col>
+      </b-row>
+      <b-row class="my-1">
+        <b-col sm="6">
+          <b-form-group
+            id="input-group-3"
+            label="income Category:"
+            label-for="input-3"
+          >
+            <b-form-select
+              v-model="form.incomecategory_id"
+              :options="resultsexp"
+            ></b-form-select>
+          </b-form-group>
+        </b-col>
+      </b-row>
+
+      <b-row class="my-1">
+        <b-col sm="6">
+          <b-button type="submit" variant="primary">Submit</b-button>
+          <b-button type="reset" variant="danger">Reset</b-button>
+        </b-col>
       </b-row>
     </b-form>
     <b-card class="mt-3" header="Form Data Result">
@@ -77,7 +98,7 @@
 
     data() {
       return {
-       "token":(localStorage.getItem('token'))?localStorage.getItem('token'):"",   
+       "token":(localStorage.getItem('token'))?localStorage.getItem('token'):"",
 
          success:false,
       error:false,
@@ -161,7 +182,7 @@ resultsexp.push({
  }
  this.resultsexp=resultsexp;
   });
-        
+
     },
     methods: {
       onSubmit(event) {
@@ -169,7 +190,7 @@ resultsexp.push({
 
   fetch('http://127.0.0.1:8000/api/add-income',{
 method:'POST',
-headers:{ 
+headers:{
     'Content-Type':'application/json',
     'Authorization': 'Bearer '+this.token,
 
@@ -208,9 +229,9 @@ body:JSON.stringify({
 
 
       })
-      
-      
-      
+
+
+
       ;
 
         //alert(JSON.stringify(this.form))
@@ -223,7 +244,7 @@ body:JSON.stringify({
        this.form.income_date = ''
         this.form.incomecategory_id = ''
        this.form.payment_type_id = ''
-      
+
         this.show = false
         this.$nextTick(() => {
           this.show = true
@@ -235,6 +256,5 @@ body:JSON.stringify({
 <style>
 form {
   margin-left: 30em;
-  
 }
 </style>

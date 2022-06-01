@@ -1,38 +1,32 @@
 <template>
   <div>
-
-          <h2>Add Income Category</h2>
-                  <p v-if="success">    
-                  
-                  <b-alert variant="success"  show>Success Alert</b-alert>
-                </p>
-                    <p v-if="error">    
-                  <b-alert variant="danger"  show>Not Saved</b-alert>
-
-                    </p>
+    <h2>Add Income Category</h2>
+    <p v-if="success">
+      <b-alert variant="success" show>Success Alert</b-alert>
+    </p>
+    <p v-if="error">
+      <b-alert variant="danger" show>Not Saved</b-alert>
+    </p>
 
     <b-form @submit="onSubmit" @reset="onReset" v-if="show">
-     
-       <b-row class="my-1">
-    <b-col sm="6">
-
-      <b-form-group id="input-group-2" label=" Name:" label-for="input-2">
-        <b-form-input
-          id="input-2"
-          v-model="form.name"
-          placeholder="Enter name"
-          required
-        ></b-form-input>
-      </b-form-group>
-      </b-col>
+      <b-row class="my-1">
+        <b-col sm="6">
+          <b-form-group id="input-group-2" label=" Name:" label-for="input-2">
+            <b-form-input
+              id="input-2"
+              v-model="form.name"
+              placeholder="Enter name"
+              required
+            ></b-form-input>
+          </b-form-group>
+        </b-col>
       </b-row>
 
-
-<b-row class="my-1">
-    <b-col sm="6">
-      <b-button type="submit" variant="primary">Submit</b-button>
-      <b-button type="reset" variant="danger">Reset</b-button>
-      </b-col>
+      <b-row class="my-1">
+        <b-col sm="6">
+          <b-button type="submit" variant="primary">Submit</b-button>
+          <b-button type="reset" variant="danger">Reset</b-button>
+        </b-col>
       </b-row>
     </b-form>
     <b-card class="mt-3" header="Form Data Result">
@@ -45,7 +39,7 @@
   export default {
     data() {
       return {
-         "token":(localStorage.getItem('token'))?localStorage.getItem('token'):"",   
+         "token":(localStorage.getItem('token'))?localStorage.getItem('token'):"",
 
          success:false,
       error:false,
@@ -65,7 +59,7 @@
 
   fetch('http://127.0.0.1:8000/api/add-income-category',{
 method:'POST',
-headers:{ 
+headers:{
     'Content-Type':'application/json',
     'Authorization': 'Bearer '+this.token,
 
@@ -99,9 +93,9 @@ body:JSON.stringify({
 
 
       })
-      
-      
-      
+
+
+
       ;
 
         //alert(JSON.stringify(this.form))
@@ -125,6 +119,5 @@ body:JSON.stringify({
 <style>
 form {
   margin-left: 30em;
-  
 }
 </style>

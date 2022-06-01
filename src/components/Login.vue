@@ -1,30 +1,30 @@
 <template>
-    <div class="vue-tempalte">
-        <form @submit.prevent="onSubmit()">
-            <h3>Sign In</h3>
-            <div class="form-group">
-                <label>Email address</label>
-                <input type="email" class="form-control form-control-lg" v-model="form.email"/>
-            </div>
-            <div class="form-group">
-                <label>Password</label>
-                <input type="password" class="form-control form-control-lg" v-model="form.password" />
-            </div>
-            <button type="submit" class="btn btn-dark btn-lg btn-block">Sign In</button>
-            <!-- <p class="forgot-password text-right mt-2 mb-4">
-                <router-link to="/forgot-password">Forgot password ?</router-link>
-            </p>
-            <div class="social-icons">
-                <ul>
-                    <li><a href="#"><i class="fa fa-google"></i></a></li>
-                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                </ul>
-            </div> -->
-        </form>
-    </div>
+  <div class="vue-tempalte">
+    <form @submit.prevent="onSubmit()">
+      <h3>Sign In</h3>
+      <div class="form-group">
+        <label>Email address</label>
+        <input
+          type="email"
+          class="form-control form-control-lg"
+          v-model="form.email"
+        />
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input
+          type="password"
+          class="form-control form-control-lg"
+          v-model="form.password"
+        />
+      </div>
+      <button type="submit" class="btn btn-dark btn-lg btn-block">
+        Sign In
+      </button>
+     
+    </form>
+  </div>
 </template>
-
 
 <script>
   export default {
@@ -34,7 +34,7 @@
            email: '',
           password: '',
         },
-       
+
       };
     },
     methods: {
@@ -43,7 +43,7 @@
 
  fetch('http://127.0.0.1:8000/api/login',{
 method:'POST',
-headers:{ 
+headers:{
     'Content-Type':'application/json',
     // 'Authorization': 'Bearer '+this.token,
 
@@ -51,7 +51,7 @@ headers:{
 body:JSON.stringify({
     email:this.form.email,
     password:this.form.password,
-    
+
 }),
 
     }).then((response)=>{
@@ -68,25 +68,23 @@ body:JSON.stringify({
         localStorage["token"]=datas.data.token;
         localStorage["user"]=datas.data.user;
 
-               // localStorage.setItem('token',datas.data.token);          
-              //  localStorage.setItem('user',datas.data.user);          
-       //console.log(localStorage['user']);
+           
         this.$router.push('/home');
 
        // }
-      
-                 
 
-       
-      
+
+
+
+
         }
 
 
       ).catch((error) => {
                         console.log(error);
       });
-      
-      
+
+
 
 
 
@@ -99,7 +97,7 @@ body:JSON.stringify({
   box-sizing: border-box;
 }
 body {
-  background: #2554FF !important;
+  background: #2554ff !important;
   min-height: 100vh;
   display: flex;
   font-weight: 400;
@@ -120,7 +118,7 @@ html,
   display: flex;
   text-align: left;
   justify-content: center;
-  flex-direction: column;    
+  flex-direction: column;
 }
 .inner-block {
   width: 450px;
@@ -129,10 +127,10 @@ html,
   box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
   padding: 40px 55px 45px 55px;
   border-radius: 15px;
-  transition: all .3s;
+  transition: all 0.3s;
 }
 .vertical-center .form-control:focus {
-  border-color: #2554FF;
+  border-color: #2554ff;
   box-shadow: none;
 }
 .vertical-center h3 {
@@ -144,5 +142,4 @@ html,
 label {
   font-weight: 500;
 }
-
 </style>

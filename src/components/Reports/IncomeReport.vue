@@ -1,47 +1,53 @@
 <template>
-<div>
+  <div>
     <h2>Manage Income Report</h2>
     <b-breadcrumb :items="items"></b-breadcrumb>
-    <!-- <b-link :to="'/add-income-category'">Add Income Category</b-link> -->
-    <!-- <button @click="LoadData" v-show="false">Load</button> -->
- <b-form @submit.prevent="LoadData" @reset="onReset">
+    <b-form @submit.prevent="LoadData" @reset="onReset">
       <b-row class="my-1">
         <b-col sm="3">
-                <b-form-group id="input-group-3" label="Date:" label-for="input-3">
-
-      <b-form-datepicker id="example-datepicker" size="sm"  v-model="form.income_date" class="mb-2"></b-form-datepicker>
+          <b-form-group id="input-group-3" label="Date:" label-for="input-3">
+            <b-form-datepicker
+              id="example-datepicker"
+              size="sm"
+              v-model="form.income_date"
+              class="mb-2"
+            ></b-form-datepicker>
           </b-form-group>
-
-    </b-col>
-    <b-col sm="3">
-      <b-form-group id="input-group-3" label="Payment Type:" label-for="input-3">
-            <b-form-select v-model="form.payment_type" :options="options"></b-form-select>
-      </b-form-group>
-      
-      </b-col>
+        </b-col>
         <b-col sm="3">
-       <b-form-group id="input-group-3" label="income Category:" label-for="input-3">
-            <b-form-select v-model="form.category" :options="resultsexp"></b-form-select>
-      </b-form-group>
-      
-      </b-col>
-    <b-col sm="3">
-
-      <b-button type="submit" variant="primary">Submit</b-button>
-      <b-button type="reset" variant="danger">Reset</b-button>
-      </b-col>
+          <b-form-group
+            id="input-group-3"
+            label="Payment Type:"
+            label-for="input-3"
+          >
+            <b-form-select
+              v-model="form.payment_type"
+              :options="options"
+            ></b-form-select>
+          </b-form-group>
+        </b-col>
+        <b-col sm="3">
+          <b-form-group
+            id="input-group-3"
+            label="income Category:"
+            label-for="input-3"
+          >
+            <b-form-select
+              v-model="form.category"
+              :options="resultsexp"
+            ></b-form-select>
+          </b-form-group>
+        </b-col>
+        <b-col sm="3">
+          <b-button type="submit" variant="primary">Submit</b-button>
+          <b-button type="reset" variant="danger">Reset</b-button>
+        </b-col>
       </b-row>
     </b-form>
-  
-   
-    <b-table striped hover :items="results">
-    
-    
-    
-    </b-table>
-</div>
- 
-    </template>
+
+    <b-table striped hover :items="results"> </b-table>
+  </div>
+</template>
 
 <script>
 export default {
@@ -50,18 +56,18 @@ export default {
     return {
 results:[],
 form: {
-        
+
         payment_type: '',
         category: '',
 
         income_date: '',
 
-         
+
         },
         success:false,
       error:false,
- "token":(localStorage.getItem('token'))?localStorage.getItem('token'):"",   
-  
+ "token":(localStorage.getItem('token'))?localStorage.getItem('token'):"",
+
         selected: null,
 
          options: [
@@ -144,7 +150,7 @@ resultsexp.push({
  }
  this.resultsexp=resultsexp;
   });
-        
+
 this.LoadData()
    },
 
@@ -157,8 +163,8 @@ this.LoadData()
 
         this.form.payment_type = ''
 
-      
-        
+
+
       },
       LoadData(){
       fetch('http://127.0.0.1:8000/api/get-income-report?income_date='+this.form.income_date+'&category='+this.form.category+'&payment_type='+this.form.payment_type,{
@@ -202,7 +208,8 @@ results.push({
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
+h1,
+h2 {
   font-weight: normal;
 }
 ul {

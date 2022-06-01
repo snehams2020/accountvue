@@ -1,29 +1,27 @@
 <template>
-<div>
- <h2>Manage Balance Sheet</h2>
+  <div>
+    <h2>Manage Balance Sheet</h2>
     <b-breadcrumb :items="items"></b-breadcrumb>
-    <!-- <b-link :to="'/add-income-category'">Add Income Category</b-link> -->
-    <!-- <button @click="LoadData" v-show="false">Load</button> -->
-      <b-form @submit="LoadData" @reset="onReset">
+    <b-form @submit="LoadData" @reset="onReset">
       <b-row class="my-1">
-    <b-col sm="3">
-      <b-form-datepicker id="example-datepicker" size="sm"  v-model="form.date" class="mb-2"></b-form-datepicker>
-</b-col>
-    <b-col sm="3">
-
-      <b-button type="submit" variant="primary">Submit</b-button>
-      <b-button type="reset" variant="danger">Reset</b-button>
-      </b-col>
+        <b-col sm="3">
+          <b-form-datepicker
+            id="example-datepicker"
+            size="sm"
+            v-model="form.date"
+            class="mb-2"
+          ></b-form-datepicker>
+        </b-col>
+        <b-col sm="3">
+          <b-button type="submit" variant="primary">Submit</b-button>
+          <b-button type="reset" variant="danger">Reset</b-button>
+        </b-col>
       </b-row>
     </b-form>
-  
-    <b-table striped hover :items="results">
-    
-    
-    
-    </b-table>
-    </div>
-    </template>
+
+    <b-table striped hover :items="results"> </b-table>
+  </div>
+</template>
 
 <script>
 export default {
@@ -31,16 +29,16 @@ export default {
   data () {
     return {
       form: {
-        
+
         date: '',
-         
+
         },
 
 results:[],
         success:false,
       error:false,
- "token":(localStorage.getItem('token'))?localStorage.getItem('token'):"",   
-   
+ "token":(localStorage.getItem('token'))?localStorage.getItem('token'):"",
+
           items: [
           {
             text: 'Home',
@@ -52,7 +50,7 @@ results:[],
             active: true
           }
          ]
-         
+
          }
   },
    mounted(){
@@ -64,8 +62,8 @@ this.LoadData()
         event.preventDefault()
         // Reset our form values
         this.form.date = ''
-      
-        
+
+
       },
       LoadData(){
       fetch('http://127.0.0.1:8000/api/get-balance-sheet?date='+this.form.date,{
@@ -109,7 +107,8 @@ results.push({
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
+h1,
+h2 {
   font-weight: normal;
 }
 ul {
