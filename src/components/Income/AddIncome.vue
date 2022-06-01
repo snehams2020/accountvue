@@ -13,7 +13,8 @@
 
     <b-form @submit="onSubmit" @reset="onReset" v-if="show">
      
-       
+        <b-row class="my-1">
+    <b-col sm="6">
 
       <b-form-group id="input-group-2" label=" Description:" label-for="input-2">
          <b-form-textarea
@@ -24,35 +25,46 @@
       max-rows="6"
     ></b-form-textarea>
       </b-form-group>
+      </b-col>
+      </b-row>
+       <b-row class="my-1">
+    <b-col sm="6">
 
       <b-form-group id="input-group-2" label=" Amount:" label-for="input-2">
 
           <b-form-input v-model="form.amount" placeholder="Enter Amount"></b-form-input>
       </b-form-group>
+      </b-col>
+      </b-row>
+       <b-row class="my-1">
+    <b-col sm="6">
 <b-form-group id="input-group-3" label="income Date:" label-for="input-3">
 
           <b-form-datepicker id="example-datepicker" v-model="form.income_date" class="mb-2"></b-form-datepicker>
     </b-form-group>   
+    </b-col>
+    </b-row>
+     <b-row class="my-1">
+    <b-col sm="6">
       <b-form-group id="input-group-3" label="Payment Type:" label-for="input-3">
             <b-form-select v-model="form.payment_type_id" :options="options"></b-form-select>
       </b-form-group>
+      </b-col>
+      </b-row>
+       <b-row class="my-1">
+    <b-col sm="6">
        <b-form-group id="input-group-3" label="income Category:" label-for="input-3">
             <b-form-select v-model="form.incomecategory_id" :options="resultsexp"></b-form-select>
       </b-form-group>
-
-     <!--  <b-form-group id="input-group-4" v-slot="{ ariaDescribedby }">
-        <b-form-checkbox-group
-          v-model="form.checked"
-          id="checkboxes-4"
-          :aria-describedby="ariaDescribedby"
-        >
-          <b-form-checkbox value="me">Check me out</b-form-checkbox>
-          <b-form-checkbox value="that">Check that out</b-form-checkbox>
-        </b-form-checkbox-group>
-      </b-form-group> -->
-
+</b-col>
+</b-row>
+  
+ <b-row class="my-1">
+    <b-col sm="6">
       <b-button type="submit" variant="primary">Submit</b-button>
       <b-button type="reset" variant="danger">Reset</b-button>
+      </b-col>
+      </b-row>
     </b-form>
     <b-card class="mt-3" header="Form Data Result">
       <pre class="m-0">{{ form }}</pre>
@@ -220,3 +232,9 @@ body:JSON.stringify({
     }
   }
 </script>
+<style>
+form {
+  margin-left: 30em;
+  
+}
+</style>

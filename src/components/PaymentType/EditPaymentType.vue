@@ -10,6 +10,9 @@
 
                     </p>
     <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+    
+        <b-row class="my-1">
+    <b-col sm="6">
       <b-form-group id="input-group-2" label=" Name:" label-for="input-2">
         <b-form-input
           id="input-2"
@@ -18,8 +21,15 @@
           required
         ></b-form-input>
       </b-form-group>
+      </b-col>
+      </b-row>
+      
+        <b-row class="my-1">
+    <b-col sm="6">
          <b-button type="submit" variant="primary">Submit</b-button>
       <b-button type="reset" variant="danger">Reset</b-button>
+      </b-col>
+      </b-row>
     </b-form>
     <b-card class="mt-3" header="Form Data Result">
       <pre class="m-0">{{ form }}</pre>
@@ -154,5 +164,8 @@ body:JSON.stringify({
 </script>
 
 <style>
-
+form {
+  margin-left: 30em;
+  
+}
 </style>

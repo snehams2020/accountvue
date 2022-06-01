@@ -13,7 +13,8 @@
 
     <b-form @submit="onSubmit" @reset="onReset" v-if="show">
      
-       
+       <b-row class="my-1">
+    <b-col sm="6">
 
       <b-form-group id="input-group-2" label=" Name:" label-for="input-2">
         <b-form-input
@@ -23,29 +24,16 @@
           required
         ></b-form-input>
       </b-form-group>
+      </b-col>
+      </b-row>
 
-      <!-- <b-form-group id="input-group-3" label="Food:" label-for="input-3">
-        <b-form-select
-          id="input-3"
-          v-model="form.food"
-          :options="foods"
-          required
-        ></b-form-select>
-      </b-form-group>
 
-      <b-form-group id="input-group-4" v-slot="{ ariaDescribedby }">
-        <b-form-checkbox-group
-          v-model="form.checked"
-          id="checkboxes-4"
-          :aria-describedby="ariaDescribedby"
-        >
-          <b-form-checkbox value="me">Check me out</b-form-checkbox>
-          <b-form-checkbox value="that">Check that out</b-form-checkbox>
-        </b-form-checkbox-group>
-      </b-form-group> -->
-
+<b-row class="my-1">
+    <b-col sm="6">
       <b-button type="submit" variant="primary">Submit</b-button>
       <b-button type="reset" variant="danger">Reset</b-button>
+      </b-col>
+      </b-row>
     </b-form>
     <b-card class="mt-3" header="Form Data Result">
       <pre class="m-0">{{ form }}</pre>
@@ -134,3 +122,9 @@ body:JSON.stringify({
     }
   }
 </script>
+<style>
+form {
+  margin-left: 30em;
+  
+}
+</style>
