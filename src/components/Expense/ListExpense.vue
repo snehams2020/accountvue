@@ -89,8 +89,7 @@ results.push({
   // names: datas['expense'][data].name,
    id: datas['expense'][data].id,
    description: datas['expense'][data].description,
-
-   amount: datas['expense'][data].amount,
+    amount: datas['expense'][data].amount,
    expenseDate: datas['expense'][data].expense_date,
    expenseCategory: datas['expense'][data].expenseCategory,
    paymentType: datas['expense'][data].paymentType,

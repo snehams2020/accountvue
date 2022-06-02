@@ -100,11 +100,9 @@ export default {
   props:['loggedIn'],
   data(){
     return{
-      //loggedIn:false
     }
   },
    mounted(){
-//this.loggedIn()
    },
   methods:{
      logout(){
@@ -113,14 +111,7 @@ export default {
         this.$router.push('/login');
 
        },
-    //     loggedIn() {
-    //   // `this` points to the component instance
-    //   if( localStorage.getItem('token')!=""){
-
-    //     this.loggedIn=true;
-    //   }
-    //   return loggedIn;
-    // }
+   
   }
 
 }

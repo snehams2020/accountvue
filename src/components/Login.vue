@@ -1,5 +1,11 @@
 <template>
   <div class="vue-tempalte">
+    <p v-if="success">
+      <b-alert variant="success" show>Success </b-alert>
+    </p>
+    <p v-if="error">
+      <b-alert variant="danger" show>Incorrect password or username</b-alert>
+    </p>
     <form @submit.prevent="onSubmit()">
       <h3>Sign In</h3>
       <div class="form-group">
@@ -9,6 +15,9 @@
           class="form-control form-control-lg"
           v-model="form.email"
         />
+          <b-form-invalid-feedback id="input-live-feedback">
+              {{errors.email}}    
+            </b-form-invalid-feedback>
       </div>
       <div class="form-group">
         <label>Password</label>
@@ -17,6 +26,9 @@
           class="form-control form-control-lg"
           v-model="form.password"
         />
+          <b-form-invalid-feedback id="input-live-feedback">
+              {{errors.password}}    
+            </b-form-invalid-feedback>
       </div>
       <button type="submit" class="btn btn-dark btn-lg btn-block">
         Sign In
@@ -30,9 +42,16 @@
   export default {
     data() {
       return {
+          success:false,
+      error:false,
          form: {
            email: '',
           password: '',
+        },
+         errors: {
+         email: '',
+          password: '',
+         
         },
 
       };
@@ -40,7 +59,8 @@
     methods: {
       onSubmit() {
         // this will be called only after form is valid. You can do api call here to login
-
+      localStorage.removeItem('user');
+    localStorage.removeItem('token');
  fetch('http://127.0.0.1:8000/api/login',{
 method:'POST',
 headers:{
@@ -55,7 +75,7 @@ body:JSON.stringify({
 }),
 
     }).then((response)=>{
-       // console.log(response);
+      console.log(response);
         if(response.ok){
          return response.json();
         }
@@ -63,15 +83,25 @@ body:JSON.stringify({
 
 
       }).then((datas)=>{
+        if(datas.status===true){
+         // console.log(datas);
+          this.success=true;
 
-        //if(datas.status=="true"){
         localStorage["token"]=datas.data.token;
         localStorage["user"]=datas.data.user;
-
-           
         this.$router.push('/home');
 
-       // }
+
+       }else{
+         console.log(datas.status);
+
+          this.error=true;
+          this.errors.email=(datas['data']['email'])?datas['data']['email'][0]:"";
+          this.errors.password=(datas['data']['password'])?datas['data']['password'][0]:"";
+
+            localStorage.removeItem('user');
+            localStorage.removeItem('token');  
+       }
 
 
 
@@ -144,5 +174,12 @@ html,
 }
 label {
   font-weight: 500;
+}
+.invalid-feedback {
+ display:block !important;
+ width:100%;
+ margin-top:.25rem;
+ font-size:80%;
+ color:#dc3545
 }
 </style>

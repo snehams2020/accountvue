@@ -4,19 +4,19 @@
     <the-header :loggedIn="loggedIn"></the-header>
 
     <!-- <the-sidebar></the-sidebar> -->
-        <button v-b-toggle.sidebar-no-header ref="myBtn" v-show="false" @click="myClickEvent">Menu</button>
+        <!-- <button v-b-toggle.sidebar-no-header ref="myBtn" v-show="false" @click="myClickEvent">Menu</button> -->
 
     <router-view/>
   </div>
 </template>
 
 <script>
-import TheSidebar from '@/components/layout/TheSidebar'
+// import TheSidebar from '@/components/layout/TheSidebar'
 import TheHeader from '@/components/layout/TheHeader'
 import Api from './components/api.vue'
 export default {
   name: 'App',
-  components:{TheSidebar,Api,TheHeader},
+  components:{Api,TheHeader},
   data(){
     return{
         loggedIn:(localStorage.getItem('token'))?localStorage.getItem('token'):""
@@ -28,13 +28,13 @@ export default {
     }
 } ,
   mounted() {
-          this.myClickEvent();
+        //  this.myClickEvent();
      },
       methods:{
-     myClickEvent(){
-            const elem = this.$refs.myBtn;
-            elem.click()
-        }
+    //  myClickEvent(){
+    //         const elem = this.$refs.myBtn;
+    //         elem.click()
+    //     }
       }
 }
 </script>
