@@ -3,17 +3,21 @@
     <h2>Manage Expense Categories</h2>
     <b-breadcrumb :items="items"></b-breadcrumb>
     <b-link :to="'/add-expense-category'">Add Expense Category</b-link>
-    <button @click="LoadData" v-show="false">Load</button>
+    <button @click="LoadExpenseData" v-show="false">Load</button>
 
     <p v-if="success">
       <b-alert variant="success" show>Success Alert</b-alert>
     </p>
     <p v-if="error">
       <b-alert variant="danger" show>Not Saved</b-alert>
-    </p>
+    </p>   
+     <!-- <h1>{{$store.state.counter}}</h1> -->
+     <!-- <h1>{{$store.state.results}}</h1> -->
+
+
     <b-container fluid>
       <!-- Main table element -->
-      <b-table striped hover :items="results" stacked="md" show-empty small>
+      <b-table striped hover :items="$store.state.results" stacked="md" show-empty small>
         <template #cell(name)="row">
           {{ row.value.first }} {{ row.value.last }}
         </template>
@@ -24,7 +28,7 @@
             variant="primary"
             >Edit</b-link
           >
-          <b-link v-on:click="deleteData(row.item.id)" variant="danger"
+          <b-link v-on:click="deleteExpenseData(row.item.id)" variant="danger"
             >Delete</b-link
           >
         </template>
@@ -39,10 +43,10 @@ export default {
 
      data() {
       return {
-        results:[],
+        // results:[],
         success:false,
       error:false,
-  "token":(localStorage.getItem('token'))?localStorage.getItem('token'):"",
+  // "token":(localStorage.getItem('token'))?localStorage.getItem('token'):"",
 
          items: [
           {
@@ -58,73 +62,30 @@ export default {
       }
     },
      mounted(){
-this.LoadData()
-   },
+       this.LoadExpenseData()
+       
+       },
 
    methods:{
-      LoadData(){
-      fetch('http://127.0.0.1:8000/api/get-expense-category',{
-    method: 'GET',
-    headers: {
-        'Authorization': 'Bearer '+this.token,
+     LoadExpenseData(){
+      // console.log(this.$store.commit('LoadData'));mutation code
+      this.$store.dispatch('LoadData')
+          
 
-    },
-} ).then((response)=>{
-        console.log(response);
-        if(response.ok){
-         return response.json();
-        }
+    
 
+     },
+     deleteExpenseData(id){
+             this.$store.commit('deleteData',{value:id})
 
-
-      }).then((datas)=>{
-  // console.log(datas);
-
- const results=[];
- for(const data in datas['expenseCategory']){
-   //console.log(data);
-
-results.push({
-   id: datas['expenseCategory'][data].id,
-
-  names: datas['expenseCategory'][data].name,
-
-actions:""
-
-
-});
- }
- this.results=results;
-  });
-      },
-      deleteData(id){
-
-   fetch('http://127.0.0.1:8000/api/delete-expense-category?id='+id,{
-    method: 'DELETE',
-    headers: {
-        'Authorization': 'Bearer '+this.token,
-
-    },
-} ).then((response)=>{
-
-        if(response.ok){
-                       // console.log(datas.status);
-
-          this.success=true;
-        }else{
-                             //    console.log(datas.status);
-
-          this.error=true;
-        }
+// this.$store.dispatch({
+//               type:deleteData,
+//               value:id
+//               })
 
 
 
-      })
-
-;
-
-
-      }
+     }
 
 
     }

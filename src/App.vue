@@ -2,6 +2,25 @@
   <div id="app">
     <!-- <img src="./assets/logo.png"> -->
     <the-header :loggedIn="loggedIn"></the-header>
+        <!-- <h1>{{$store.state.test}}</h1> -->
+
+    <!-- <button @click="$store.commit.LoadData" v-show="false">Load</button> -->
+      <!-- <b-table striped hover :items="results" stacked="md" show-empty small>
+        <template #cell(name)="row">
+          {{ row.value.first }} {{ row.value.last }}
+        </template>
+
+        <template #cell(actions)="row">
+          <b-link
+            :to="{ name: 'EditExpenseCategory', params:{id:row.item.id}}"
+            variant="primary"
+            >Edit</b-link
+          >
+          <b-link v-on:click="deleteData(row.item.id)" variant="danger"
+            >Delete</b-link
+          >
+        </template>
+      </b-table> -->
 
     <!-- <the-sidebar></the-sidebar> -->
         <!-- <button v-b-toggle.sidebar-no-header ref="myBtn" v-show="false" @click="myClickEvent">Menu</button> -->
@@ -29,6 +48,11 @@ export default {
 } ,
   mounted() {
         //  this.myClickEvent();
+        //  this.$createStore.commit('LoadData')
+            // this.$store.commit({
+            //   type:increase,
+            //   value:10
+            //   })
      },
       methods:{
     //  myClickEvent(){
