@@ -4,11 +4,10 @@
     <b-breadcrumb :items="items"></b-breadcrumb>
     <b-link :to="'/add-expense-category'">Add Expense Category</b-link>
     <button @click="LoadExpenseData" v-show="false">Load</button>
-
-    <p v-if="success">
+    <p v-if="$store.state.expensecategory.success">
       <b-alert variant="success" show>Success Alert</b-alert>
     </p>
-    <p v-if="error">
+    <p v-if="$store.state.expensecategory.error">
       <b-alert variant="danger" show>Not Saved</b-alert>
     </p>   
      <!-- <h1>{{$store.state.counter}}</h1> -->
@@ -16,8 +15,9 @@
 
 
     <b-container fluid>
+     <!-- <p>{{$store.dispatch('expensecategory/LoadData')}}</p> -->
       <!-- Main table element -->
-      <b-table striped hover :items="$store.state.results" stacked="md" show-empty small>
+      <b-table striped hover :items="$store.state.expensecategory.results" stacked="md" show-empty small>
         <template #cell(name)="row">
           {{ row.value.first }} {{ row.value.last }}
         </template>
@@ -39,13 +39,13 @@
 </template>
 
 <script>
+  import {mapState, mapGetters, mapActions} from 'vuex'
 export default {
 
      data() {
       return {
         // results:[],
-        success:false,
-      error:false,
+      
   // "token":(localStorage.getItem('token'))?localStorage.getItem('token'):"",
 
          items: [
@@ -67,16 +67,16 @@ export default {
        },
 
    methods:{
+     
      LoadExpenseData(){
-      // console.log(this.$store.commit('LoadData'));mutation code
-      this.$store.dispatch('LoadData')
+    // console.log(this.$store.dispatch('expensecategory/LoadData'));
+      this.$store.dispatch("expensecategory/LoadData")
           
+        },
 
-    
-
-     },
+     
      deleteExpenseData(id){
-             this.$store.commit('deleteData',{value:id})
+             this.$store.commit('expensecategory/deleteData',{value:id})
 
 // this.$store.dispatch({
 //               type:deleteData,
@@ -84,12 +84,12 @@ export default {
 //               })
 
 
-
+},
      }
 
 
     }
-}
+//}
 </script>
 
 <style></style>

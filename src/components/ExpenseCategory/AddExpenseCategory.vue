@@ -1,10 +1,10 @@
 <template>
   <div>
     <h2>Add Expense Categories</h2>
-    <p v-if="success">
+    <p v-if="$store.state.addexpensecategory.success">
       <b-alert variant="success" show>Success Alert</b-alert>
     </p>
-    <p v-if="error">
+    <p v-if="$store.state.addexpensecategory.error">
       <b-alert variant="danger" show>Not Saved</b-alert>
     </p>
 
@@ -60,50 +60,9 @@
     methods: {
       onSubmit(event) {
         event.preventDefault()
+        this.$store.commit('addexpensecategory/onExpenseCategorySubmit',{value:this.form})
 
-  fetch('http://127.0.0.1:8000/api/add-expense-category',{
-method:'POST',
-headers:{
-    'Content-Type':'application/json',
-    'Authorization': 'Bearer '+this.token,
-
-},
-body:JSON.stringify({
-    name:this.form.name
-}),
-
-    }).then((response)=>{
-       // console.log(response);
-        if(response.ok){
-         return response.json();
-        }
-
-
-
-      }).then((datas)=>{
-       // console.log(response);
-
-        if(datas.status=="true"){
-                       // console.log(datas.status);
-
-          this.successMessage="Success";
-          this.success=true;
-        }else{
-                             //    console.log(datas.status);
-
-          this.error=true;
-          this.errors.name=(datas['data']['name'])?datas['data']['name'][0]:"";
-
-        }
-
-
-
-      })
-
-
-
-      ;
-
+  
         //alert(JSON.stringify(this.form))
       },
       onReset(event) {
